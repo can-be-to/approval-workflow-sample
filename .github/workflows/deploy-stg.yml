@@ -1,0 +1,13 @@
+name: Deploy To staging
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+jobs:
+  deploy-dev:
+    uses: can-be-to/approval-workflow-sample/.github/workflows/deploy.yml@main
+    with:
+      environment: staging
