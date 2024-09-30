@@ -3,11 +3,16 @@ name: Deploy To production
 on:
   workflow_dispatch:
 
-permissions:
-  id-token: write
-  contents: read
 jobs:
-  deploy-dev:
-    uses: can-be-to/approval-workflow-sample/.github/workflows/deploy.yml@main
-    with:
-      environment: production
+  plan:
+    runs-on: ubuntu-latest
+    steps:
+      - name:
+        run: echo 'plan...'
+  apply:
+    needs: plan
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name:
+        run: echo 'apply...'
