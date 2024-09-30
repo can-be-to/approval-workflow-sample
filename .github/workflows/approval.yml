@@ -1,0 +1,16 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    steps:
+      - name:
+        run: echo 'plan...'
+  apply:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name:
+        run: echo 'apply...'
