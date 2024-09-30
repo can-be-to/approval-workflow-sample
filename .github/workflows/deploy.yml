@@ -17,11 +17,14 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     steps:
-      # - name: Check Environment
-      #   run: |
-      #     if ! gh api /repos/${{ github.repository }}/environments/${{ inputs.environment }} >/dev/null 2>&1; then
-      #       echo "Error: Environment '${{ inputs.environment }}' does not exist."
-      #       exit 1
-      #     fi
+      - name: Check Environment
+        id: check_env
+        run: |
+          response=$(gh api /repos/${{ github.repository }}/environments/${{ inputs.environment }} --silent --fail)
+          if [ -z "$response" ]; then
+            echo "Error: Environment '${{ inputs.environment }}' does not exist."
+            exit 1
+          fi
       - name:
+        if: steps.check_env.outcome == 'success'
         run: echo '${{ secrets.FOO }} ${{ vars.BAR }}'
