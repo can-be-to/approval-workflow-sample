@@ -1,0 +1,22 @@
+name: Deploy To ECS Dev BackEnd
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Select Deployment Environment'
+        required: true
+        type: choice
+        options:
+          - production
+          - staging
+          - develop
+
+permissions:
+  id-token: write
+  contents: read
+jobs:
+  deploy-dev:
+    uses: can-be-to/approval-workflow-sample/.github/workflows/deploy.yml@main
+    with:
+      environment: ${{ github.event.inputs.environment }}

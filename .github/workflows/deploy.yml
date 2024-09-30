@@ -1,7 +1,11 @@
 name: Deploy
 
 on:
-  workflow_dispatch:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
 jobs:
   plan:
     runs-on: ubuntu-latest
@@ -9,8 +13,9 @@ jobs:
       - name:
         run: echo 'plan...'
   apply:
+    needs: plan
     runs-on: ubuntu-latest
-    environment: production
+    environment: ${{ inputs.environment }}
     steps:
       - name:
         run: echo 'apply...'
