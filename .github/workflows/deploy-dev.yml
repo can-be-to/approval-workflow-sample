@@ -10,4 +10,4 @@ jobs:
   deploy-dev:
     uses: can-be-to/approval-workflow-sample/.github/workflows/deploy.yml@main
     with:
-      environment: develop
+      environment: foo
