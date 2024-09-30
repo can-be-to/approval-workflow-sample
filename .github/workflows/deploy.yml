@@ -6,29 +6,24 @@ on:
       environment:
         required: true
         type: string
+env:
+  AWS_REGION: ap-northeast-1
+  AWS_ROLE_ARN: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/appGithubActionsRole
 jobs:
   plan:
     runs-on: ubuntu-latest
     steps:
       - name:
         run: echo 'plan...'
+      - name: Configure AWS credentials from IAM Role
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
   apply:
     needs: plan
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     steps:
-      - name: Check Environment
-        id: check_env
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # GH_TOKENを設定
-        run: |
-          response=$(gh api /repos/${{ github.repository }}/environments/${{ inputs.environment }} --silent --include)
-          status_code=$?
-          if [ $status_code -ne 0 ]; then
-            echo "Error: Environment '${{ inputs.environment }}' does not exist."
-            exit 1
-          fi
-
       - name: Apply
-        if: steps.check_env.outcome == 'success'  # 環境が存在する場合のみ実行
         run: echo '${{ secrets.FOO }} ${{ vars.BAR }}'
