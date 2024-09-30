@@ -2,6 +2,15 @@ name: Deploy To production
 
 on:
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Select the deployment environment'
+        required: true
+        type: choice
+        options:
+          - develop
+          - staging
+          - production
 
 permissions:
   id-token: write
@@ -10,4 +19,4 @@ jobs:
   deploy-dev:
     uses: can-be-to/approval-workflow-sample/.github/workflows/deploy.yml@main
     with:
-      environment: production
+      environment: ${{ github.event.inputs.environment }}
