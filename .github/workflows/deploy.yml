@@ -19,6 +19,8 @@ jobs:
     steps:
       - name: Check Environment
         id: check_env
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # GH_TOKENを設定
         run: |
           response=$(gh api /repos/${{ github.repository }}/environments/${{ inputs.environment }} --silent --include)
           status_code=$?
@@ -26,6 +28,7 @@ jobs:
             echo "Error: Environment '${{ inputs.environment }}' does not exist."
             exit 1
           fi
-      - name:
-        if: steps.check_env.outcome == 'success'
+
+      - name: Apply
+        if: steps.check_env.outcome == 'success'  # 環境が存在する場合のみ実行
         run: echo '${{ secrets.FOO }} ${{ vars.BAR }}'
