@@ -20,8 +20,9 @@ jobs:
       - name: Check Environment
         id: check_env
         run: |
-          response=$(gh api /repos/${{ github.repository }}/environments/${{ inputs.environment }} --silent --fail)
-          if [ -z "$response" ]; then
+          response=$(gh api /repos/${{ github.repository }}/environments/${{ inputs.environment }} --silent --include)
+          status_code=$?
+          if [ $status_code -ne 0 ]; then
             echo "Error: Environment '${{ inputs.environment }}' does not exist."
             exit 1
           fi
