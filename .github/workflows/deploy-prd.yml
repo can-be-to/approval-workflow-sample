@@ -1,4 +1,4 @@
-name: Deploy To develop
+name: Deploy To production
 
 on:
   workflow_dispatch:
@@ -10,4 +10,4 @@ jobs:
   deploy-dev:
     uses: can-be-to/approval-workflow-sample/.github/workflows/deploy.yml@main
     with:
-      environment: develop
+      environment: production
