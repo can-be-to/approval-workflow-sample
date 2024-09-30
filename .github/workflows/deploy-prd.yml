@@ -10,7 +10,6 @@ jobs:
       - name:
         run: echo 'plan...'
   apply:
-    needs: plan
     runs-on: ubuntu-latest
     environment: production
     steps:
