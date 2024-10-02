@@ -14,6 +14,8 @@ jobs:
         run: echo 'plan...'
 
       - name: Wait manual approval
+        env:
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           ghRunListCmd="gh run list --workflow approve --branch ${{ github.ref_name }} \
               --status success --json headSha --jq ".[].headSha" --limit 1"
