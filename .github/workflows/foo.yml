@@ -1,0 +1,15 @@
+name: Approve
+on:
+  workflow_dispatch:
+
+env:
+  # 指定したユーザーのみが承認できる
+  AUTHORIZED_USERS: 'can-be-to,foo,bar'
+jobs:
+  approve:
+    name: approve
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check unauthorized users
+        if: contains(env.AUTHORIZED_USERS, github.triggering_actor) == false
+        run: exit 1
