@@ -1,0 +1,11 @@
+name: approve
+on:
+  workflow_dispatch
+jobs:
+  approve:
+    name: approve
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check unauthorized users
+        if: github.triggering_actor != 'can-be-to'
+        run: exit 1

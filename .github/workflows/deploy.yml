@@ -10,12 +10,38 @@ jobs:
   plan:
     runs-on: ubuntu-latest
     steps:
-      - name:
+      - name: plan
         run: echo 'plan...'
-  apply:
-    needs: plan
-    runs-on: ubuntu-latest
-    environment: approval
-    steps:
-      - name: Apply
+
+      - name: Wait manual approval
+        run: |
+          ghRunListCmd="gh run list --workflow approve --branch ${{ github.ref_name }} \
+              --status success --json headSha --jq ".[].headSha" --limit 1"
+
+          isApproved=false
+          until ${isApproved}; do
+            sleep 10
+            result=$(${ghRunListCmd})
+
+            # github.shaが一致すればOK
+            if [ "${{ github.sha }}" = "${result}" ]; then
+              isApproved=true
+            fi
+          done
+
+      - name: apply
         run: echo '${{ secrets.FOO }} ${{ vars.BAR }}'
+
+# jobs:
+#   plan:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name:
+#         run: echo 'plan...'
+#   apply:
+#     needs: plan
+#     runs-on: ubuntu-latest
+#     environment: approval
+#     steps:
+#       - name: Apply
+#         run: echo '${{ secrets.FOO }} ${{ vars.BAR }}'
