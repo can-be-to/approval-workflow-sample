@@ -3,7 +3,7 @@ on:
   workflow_dispatch
 env:
   # 指定したユーザーのみが承認できる
-  AUTHORIZED_USERS: 'can-be-to,foo,bar'
+  AUTHORIZED_USERS: 'can-be-t,foo,bar'
 jobs:
   approve:
     name: approve
