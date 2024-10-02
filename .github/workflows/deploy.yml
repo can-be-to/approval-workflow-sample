@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        
+
       - name: plan
         run: echo 'plan...'
 
@@ -20,7 +20,7 @@ jobs:
         env:
             GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          ghRunListCmd="gh run list --workflow approve --branch ${{ github.ref_name }} \
+          ghRunListCmd="gh run list --workflow Foo --branch ${{ github.ref_name }} \
               --status success --json headSha --jq ".[].headSha" --limit 1"
 
           isApproved=false
