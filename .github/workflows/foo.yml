@@ -1,4 +1,4 @@
-name: Approve
+name: Foo
 on:
   workflow_dispatch:
 
