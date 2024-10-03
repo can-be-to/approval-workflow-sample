@@ -20,8 +20,8 @@ jobs:
         env:
             GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          env_name="${{ inputs.environment }}"
-          ghRunListCmd="gh run list --workflow 'Approve ${env_name}' --branch ${{ github.ref_name }} \
+          env_name="Approve ${{ inputs.environment }}"
+          ghRunListCmd="gh run list --workflow '${env_name}' --branch ${{ github.ref_name }} \
               --status success --json headSha --jq '.[].headSha' --limit 1"
 
           isApproved=false
