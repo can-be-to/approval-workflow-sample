@@ -17,6 +17,6 @@ permissions:
   contents: read
 jobs:
   deploy-dev:
-    uses: can-be-to/approval-workflow-sample/.github/workflows/deploy.yml@main
+    uses: can-be-to/approval-workflow-sample/.github/workflows/deploy.yml@feature/test
     with:
       environment: ${{ github.event.inputs.environment }}

@@ -5,4 +5,4 @@ on:
 
 jobs:
   approve:
-    uses: can-be-to/approval-workflow-sample/.github/workflows/approve.yml@main
+    uses: can-be-to/approval-workflow-sample/.github/workflows/approve.yml@feature/test
