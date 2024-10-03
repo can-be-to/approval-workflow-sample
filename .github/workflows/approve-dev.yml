@@ -1,0 +1,8 @@
+name: Approve
+
+on:
+  workflow_dispatch:
+
+jobs:
+  approve:
+    uses: can-be-to/approval-workflow-sample/.github/workflows/approve.yml@main
